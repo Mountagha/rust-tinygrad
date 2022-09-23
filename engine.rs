@@ -6,8 +6,22 @@ use std::ops::Add;
 pub struct Value {
     data: f32,
     grad: f32,
-    children: &[Value],
+    backward: FnMut() - > (),
+    children: Vec<Value>,
     op: String
+}
+
+impl Value {
+    fn new(data: f32, children: Option<Vec<Value>>,  op: Option<String>) -> Self {
+        Self {
+            data: data, 
+            grad: 0.0,
+            backward: ||,
+            children.unwrap_or(vec![]),
+            op.unwrap_or("".to_string())
+        }
+        
+    }
 }
 
 impl Add for Value {
@@ -23,7 +37,8 @@ impl Add for Value {
 }
 
 fn main() {
-    let v1 : Value = Value {data: 1.0, grad: 0.0, op: "".to_string()};
-    println!("{:#?}", v1);
+    // let v1 : Value = Value {data: 1.0, grad: 0.0, op: "".to_string()};
+    //println!("{:#?}", v1);
+    let v1 = Value::new(5 None, None);
 }
 
